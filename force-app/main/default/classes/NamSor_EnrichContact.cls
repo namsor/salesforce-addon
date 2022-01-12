@@ -1,7 +1,6 @@
 public class NamSor_EnrichContact {
 
     public static void execute(List<Contact> contactsToUpdate) {
-        // List<Contact> contactsToUpdate = getContactsToUpdate(executeAll);
         Map<String, List<Contact>> mapNameContacts = getNamesContactsMap(contactsToUpdate);
         String jsonBody = serializeJsonBody(new List<String>(mapNameContacts.keySet()));
         try {

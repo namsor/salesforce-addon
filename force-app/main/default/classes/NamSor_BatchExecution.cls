@@ -1,5 +1,8 @@
-global class NamSor_BatchExecution implements Database.Batchable<sObject>, Database.AllowsCallouts, Database.Stateful {
+global class NamSor_BatchExecution implements Database.Batchable<sObject>, Database.AllowsCallouts, Database.Stateful, Schedulable {
     global Boolean executeAll = false;
+    global NamSor_BatchExecution() {
+        executeAll = false;
+    }
     global NamSor_BatchExecution(Boolean executeAllDatabase) {
         executeAll = executeAllDatabase;
     }
@@ -18,5 +21,10 @@ global class NamSor_BatchExecution implements Database.Batchable<sObject>, Datab
 
     global void finish(Database.BatchableContext bc) {
         System.debug('Finished Namsor Batch Execution');
+    }
+
+    global void execute(SchedulableContext sc) {
+        NamSor_BatchExecution batchExecution = new NamSor_BatchExecution();
+        Database.executeBatch(batchExecution, 100);
     }
 }
